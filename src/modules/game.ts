@@ -5,28 +5,24 @@ import '../img/audio.svg';
 import { getRandomPage, hideElem, shuffle } from './utils';
 import { renderWordCard } from './renderWordCard';
 
+/** Массив с 600 словами из выбранной сложности */
+const allWords: string[] = [];
+const getRandomTranslate = () => allWords[Math.floor(Math.random() * allWords.length)];
+
 export const initGame = () => {
   const wrapper: HTMLElement | null = document.querySelector('.wrapper');
   const selection = document.querySelector('.selection');
   const audioWrapper: HTMLElement | null = document.querySelector('.audio-wrapper');
   const audioTitle: HTMLElement | null = document.querySelector('.audio__title');
 
-  /** Массив с 600 словами из выбранной сложности */
-  const allWords: string[] = [];
-
-  const getRandomTranslate = () => allWords[Math.floor(Math.random() * allWords.length)];
-
-  /** Рендер слова */
+  /** Рендер слов */
   const renderWords = (words: AxiosResponse<Words[]>) => {
-    if (audioWrapper) hideElem(audioWrapper);
-    if (audioTitle) hideElem(audioTitle);
+    if (audioWrapper) hideElem(audioWrapper); // Скрываем описание и меню выбора сложности
+    if (audioTitle) hideElem(audioTitle); // Скрыываем заголовок Аудиовызов
 
     const wordBox: HTMLDivElement = document.createElement('div');
     wordBox.className = 'word-box';
     wrapper?.append(wordBox);
-
-    /** Счетчик показанных слов */
-    let wordsCount = 0;
 
     /** Счетчики выигрышей / проигрышей */
     const countWin: Words[] = [];
@@ -93,15 +89,17 @@ export const initGame = () => {
       return wordBox.append(block);
     };
 
-    /** Показ слов */
+    /** Счетчик показанных слов */
+    let wordsCount = 0;
+
+    /** Показ слова */
     const showWord = async () => {
       const word = words.data[wordsCount];
       wordsCount += 1;
-      // console.log('word: ', word);
 
-      wordBox.textContent = '';
+      wordBox.textContent = ''; // очищаем поле перед каждым словом
 
-      /** Заполняем массив сослучайными ответами */
+      /** Заполняем массив вариантов ответов рандом из 600 слов */
       const answesArray: Set<string> = new Set();
       answesArray.add(word.wordTranslate); // Помещаем правильный ответ
       while (answesArray.size !== 5) {
@@ -110,8 +108,9 @@ export const initGame = () => {
 
       const questionDiv = document.createElement('div');
       questionDiv.className = 'question-wrapper';
-      questionDiv.dataset.count = `${wordsCount}/${words.data.length}`;
+      // questionDiv.dataset.count = `${wordsCount}/${words.data.length}`;
 
+      /** Создаем кнопку аудио */
       const audio = new Audio();
       audio.src = `http://localhost:27017/${(await getWord(word.id)).data.audio}`;
       audio.currentTime = 0;
@@ -122,6 +121,7 @@ export const initGame = () => {
 
       audioButton.addEventListener('click', () => audio.play());
 
+      /** Создаем кнопки ответов */
       const ul = document.createElement('ul');
       ul.className = 'answer-buttons__list';
       shuffle(Array.from(answesArray)).forEach((item, index) => {
@@ -136,6 +136,7 @@ export const initGame = () => {
         li.append(btn);
         ul.append(li);
       });
+      /** Создаем кнопку Не знаю */
       const mainBtn = document.createElement('button');
       mainBtn.className = 'main-button';
       mainBtn.textContent = 'Не знаю';
@@ -184,15 +185,17 @@ export const initGame = () => {
     showWord();
   };
 
+  /** Клик по уровню сложности, формируется массив с 600 словами вариантов ответов */
   selection?.addEventListener('click', async (e) => {
     if (e.target && e.target instanceof HTMLElement) {
       if (e.target.classList.contains('selection__btn') && e.target.textContent) {
-        const words = await getWords(+e.target.textContent - 1, getRandomPage());
+        const tagret = +e.target.textContent - 1;
+        const words = await getWords(tagret, getRandomPage());
 
         const allWordsInGroup: AxiosResponse<Words[]>[] = [];
         for (let i = 0; i <= 29; i++) {
           // eslint-disable-next-line no-await-in-loop
-          allWordsInGroup.push(await getWords(+e.target.textContent - 1, i));
+          allWordsInGroup.push(await getWords(tagret, i));
         }
         // eslint-disable-next-line max-len
         allWordsInGroup.flat().map((item) => item.data.forEach((i) => allWords.push(i.wordTranslate)));

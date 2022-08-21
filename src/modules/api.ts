@@ -6,7 +6,6 @@ export const getWords = (group: number, page: number): Promise<AxiosResponse<Wor
 
 export const getWord = (id: string): Promise<AxiosResponse<Words>> => axiosInstance.get(`/words/${id}`);
 
-// eslint-disable-next-line consistent-return
 // export const getData = async (group: number, page: number) => {
 //   try {
 //     return await API.get(`/words?group=${group}&page=${page}`);
