@@ -2,13 +2,14 @@ import { getWord } from './api';
 import { Words } from './types';
 
 /** Показ карточки в случае верного ответа */
-export const renderWordCard = async (word: Words) => {
+export const renderCorrectWordCard = async (word: Words) => {
   const divCard = document.createElement('div');
   divCard.className = 'card-wrapper';
   const imgWrapper = document.createElement('div');
   imgWrapper.className = 'img-card';
   const img = document.createElement('img');
   img.src = `http://localhost:27017/${(await getWord(word.id)).data.image}`;
+  img.className = 'word-img';
   imgWrapper.append(img);
 
   const audio = new Audio();
@@ -21,12 +22,12 @@ export const renderWordCard = async (word: Words) => {
   audioButton.addEventListener('click', () => audio.play());
 
   const rightWord = document.createElement('p');
-  rightWord.textContent = `Слово - ${(await getWord(word.id)).data.word}`;
+  rightWord.textContent = `${(await getWord(word.id)).data.word}`;
   const translate = document.createElement('p');
-  translate.textContent = `Перевод - ${(await getWord(word.id)).data.wordTranslate}`;
+  translate.textContent = `${(await getWord(word.id)).data.wordTranslate}`;
 
-  const transcription = document.createElement('p');
-  transcription.textContent = `Транскрипция - ${(await getWord(word.id)).data.transcription}`;
-  divCard.append(imgWrapper, audioButton, rightWord, translate, transcription);
+  // const transcription = document.createElement('p');
+  // transcription.textContent = `Транскрипция - ${(await getWord(word.id)).data.transcription}`;
+  divCard.append(imgWrapper, audioButton, rightWord, translate);
   return divCard;
 };

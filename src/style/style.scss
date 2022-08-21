@@ -81,6 +81,7 @@ font-size: 20px;
 .selection__title {
 
 }
+
 .selection__list {
 display: flex;
 justify-content: center;
@@ -89,6 +90,7 @@ gap: 10px;
 .selection__item {
 
 }
+
 .selection__btn {
 width: 40px;
 height: 40px;
@@ -103,23 +105,38 @@ height: 40px;
 .question-wrapper {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   align-items:center;
-  margin: 0 auto;
-  max-width: 800px;
-  height: 300px;
+  width: 700px;
+  background-color:antiquewhite;
+  border-radius: 10px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.1);
-  border-radius: 30px;
+}
+
+.audio-btn-wrapper {
+  margin: 10px;
+  width: 100%;
+  height: 150px;
+  display: flex;
+  justify-content: center;
 }
 
 .audio-button-card,
 .audio-button {
-  // margin-left: 50%;
-  // transition: translateX(-50%);
   width: 150px;
   border-radius: 50%;
   border: none;
   opacity: .5;
   transition: all .3s ease-in-out;
+}
+
+.audio-button-card {
+  width: auto;
+  height: 80px;
 }
 
 .audio-button-card:hover,
@@ -129,33 +146,102 @@ height: 40px;
 
 .answer-buttons__list {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
   padding-bottom: 40px;
 }
 
-/* Карточка с правильным ответом*/
+.main-button {
+  margin-bottom: 30px;
+  width: 120px;
+}
 
+/* Карточка с правильным ответом*/
 .card-wrapper {
-  width: 200px;
-  height: 600px;
+  font-size: 22px;
+  color: green;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: 80%;
   background-color:antiquewhite;
   border-radius: 5px;
 }
 
+.card-wrapper_uncorrect {
+  color: red;
+}
+
 .img-card {
-  width: 80px;
-  height: 80px;
+  width: 120px;
+  height: 120px;
+  border: 2px solid green;
   border-radius: 50%;
+  overflow: hidden;
+}
+
+.img-card_uncorrect {
+  border-color: red;
+}
+
+.word-img {
+  overflow: hidden;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
 }
 
 .audio-button-card {
-  width: 30px;
+  width: 40px;
+  height: auto;
 }
 
 .result-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items:center;
+  width: 700px;
+  background-color:antiquewhite;
+  border-radius: 10px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 
+.correct-div,
+.uncorrect-div {
+  border-bottom: 1px solid black;
+  width: 100%;
 }
 
 .correct-li {
+  padding: 10px;
   display: flex;
+  justify-content: space-between;
+  border-bottom: 1px dotted black;
+}
+
+.correct-result__title,
+.uncorrect-result__title {
+  padding: 10px;
+  color: green;
+  text-align: center;
+}
+
+.uncorrect-result__title {
+  color: red;
+}
+
+.buttons-wrapper {
+  display: flex;
+  gap:20px;
+}
+
+.new-game-btn,
+.in-textbook-btn {
+  margin: 20px auto;
+  width: 100px;
 }
