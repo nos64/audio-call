@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { getWords, getWord } from './api';
-import { Words } from './types';
+import { baseURL, Words } from './types';
 import '../img/audio.svg';
 import { getRandomPage, hideElem, shuffle } from './utils';
 import { renderCorrectWordCard } from './renderCorrectWordCard';
@@ -53,7 +53,7 @@ export const initGame = () => {
 
       /** Создаем кнопку аудио */
       const audio = new Audio();
-      audio.src = `http://localhost:27017/${(await getWord(word.id)).data.audio}`;
+      audio.src = `${baseURL}/${(await getWord(word.id)).data.audio}`;
       audio.currentTime = 0;
       audio.autoplay = true;
       const audioBtnDiv = document.createElement('div');

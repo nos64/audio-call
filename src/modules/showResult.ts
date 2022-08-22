@@ -1,6 +1,6 @@
 // import { startGame } from '../index';
 import { getWord } from './api';
-import { Words } from './types';
+import { baseURL, Words } from './types';
 import '../img/audio.svg';
 
 /** Показать результат */
@@ -20,7 +20,7 @@ export const showResult = (countWin: Words[], countLose: Words[], wordBox: HTMLE
     const li = document.createElement('li');
     li.className = 'correct-li';
     const audio = new Audio();
-    audio.src = `http://localhost:27017/${(await getWord(word.id)).data.audio}`;
+    audio.src = `${baseURL}/${(await getWord(word.id)).data.audio}`;
     audio.currentTime = 0;
     const audioButton = document.createElement('button');
     audioButton.className = 'audio-button-card';
@@ -49,7 +49,7 @@ export const showResult = (countWin: Words[], countLose: Words[], wordBox: HTMLE
     const li = document.createElement('li');
     li.className = 'correct-li';
     const audio = new Audio();
-    audio.src = `http://localhost:27017/${(await getWord(word.id)).data.audio}`;
+    audio.src = `${baseURL}/${(await getWord(word.id)).data.audio}`;
     audio.currentTime = 0;
     const audioButton = document.createElement('button');
     audioButton.className = 'audio-button-card';

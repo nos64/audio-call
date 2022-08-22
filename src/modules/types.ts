@@ -14,3 +14,6 @@ export interface Words {
   textMeaningTranslate: string,
   textExampleTranslate: string,
 }
+
+export const baseURL = 'https://rs-react-learnwords.herokuapp.com';
+// export const baseURL = 'http://localhost:27017';

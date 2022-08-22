@@ -1,5 +1,5 @@
 import { getWord } from './api';
-import { Words } from './types';
+import { baseURL, Words } from './types';
 
 /** Показ карточки в случае не верного ответа */
 export const renderUncorrectWordCard = async (word: Words) => {
@@ -8,12 +8,12 @@ export const renderUncorrectWordCard = async (word: Words) => {
   const imgWrapper = document.createElement('div');
   imgWrapper.className = 'img-card img-card_uncorrect';
   const img = document.createElement('img');
-  img.src = `http://localhost:27017/${(await getWord(word.id)).data.image}`;
+  img.src = `${baseURL}/${(await getWord(word.id)).data.image}`;
   img.className = 'word-img';
   imgWrapper.append(img);
 
   const audio = new Audio();
-  audio.src = `http://localhost:27017/${(await getWord(word.id)).data.audio}`;
+  audio.src = `${baseURL}/${(await getWord(word.id)).data.audio}`;
   audio.currentTime = 0;
   const audioButton = document.createElement('button');
   audioButton.className = 'audio-button-card';
